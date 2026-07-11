@@ -7,6 +7,9 @@
   <meta name="description" content="Graduate connects students, graduates, employers, and professors — find jobs, scholarships, and endorsements in one place." />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.169.0/build/three.module.js" } }
+  </script>
 </head>
 <body>
 
@@ -45,25 +48,7 @@
           </div>
         </div>
         <div class="hero-art" id="capStage" aria-hidden="true">
-          <svg id="cap" viewBox="0 0 200 200" width="100%" height="100%">
-            <defs>
-              <linearGradient id="capTop" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#818cf8"/>
-                <stop offset="100%" stop-color="#4338ca"/>
-              </linearGradient>
-              <linearGradient id="capBoard" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#312e81"/>
-                <stop offset="100%" stop-color="#1e1b4b"/>
-              </linearGradient>
-            </defs>
-            <g id="capGroup">
-              <ellipse cx="100" cy="120" rx="46" ry="20" fill="url(#capTop)"/>
-              <polygon points="100,40 190,90 100,140 10,90" fill="url(#capBoard)"/>
-              <circle cx="100" cy="90" r="7" fill="#facc15"/>
-              <line x1="100" y1="90" x2="150" y2="150" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="150" cy="150" r="6" fill="#facc15"/>
-            </g>
-          </svg>
+          <canvas id="capCanvas"></canvas>
         </div>
       </div>
     </section>
@@ -267,5 +252,6 @@
   </footer>
 
   <script src="/script.js"></script>
+  <script type="module" src="/cap3d.js"></script>
 </body>
 </html>

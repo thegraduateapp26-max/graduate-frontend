@@ -1,51 +1,7 @@
 (function () {
   var API_BASE = 'https://graduate-backend-production.up.railway.app';
 
-  // --- Interactive graduation cap: tilts toward the cursor, gentle idle float otherwise ---
-  var stage = document.getElementById('capStage');
-  var capGroup = document.getElementById('capGroup');
-  var idleAngle = 0;
-  var idleTimer = null;
-
-  function applyTilt(rotateX, rotateY) {
-    capGroup.style.transform =
-      'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-  }
-
-  function startIdleFloat() {
-    stopIdleFloat();
-    idleTimer = setInterval(function () {
-      idleAngle += 0.02;
-      var rx = Math.sin(idleAngle) * 4;
-      var ry = Math.cos(idleAngle * 0.8) * 6;
-      applyTilt(rx, ry);
-    }, 30);
-  }
-
-  function stopIdleFloat() {
-    if (idleTimer) {
-      clearInterval(idleTimer);
-      idleTimer = null;
-    }
-  }
-
-  if (stage && capGroup && window.matchMedia('(pointer: fine)').matches) {
-    stage.addEventListener('mousemove', function (e) {
-      stopIdleFloat();
-      var rect = stage.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width - 0.5;
-      var y = (e.clientY - rect.top) / rect.height - 0.5;
-      var rotateY = x * 40;
-      var rotateX = -y * 40;
-      applyTilt(rotateX, rotateY);
-    });
-    stage.addEventListener('mouseleave', function () {
-      startIdleFloat();
-    });
-    startIdleFloat();
-  } else if (capGroup) {
-    startIdleFloat();
-  }
+  // Interactive 3D graduation cap lives in cap3d.js (Three.js module script)
 
   // --- Live stats ---
   function setStat(key, value) {
