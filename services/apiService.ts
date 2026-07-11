@@ -161,6 +161,34 @@ export async function deleteScholarship(id: string): Promise<{ status: string }>
 }
 
 // ============================================================
+// APPLICATIONS
+// ============================================================
+
+export async function applyToJob(jobId: string): Promise<{ status: string; application_id: string }> {
+  return apiFetch('/api/apply', {
+    method: 'POST',
+    body: JSON.stringify({ job_id: jobId }),
+  });
+}
+
+export interface ApiApplication {
+  id: string;
+  jobId: string;
+  status: string;
+  appliedAt: string;
+  job: {
+    title: string;
+    company: string;
+    location: string;
+    jobType: string;
+  };
+}
+
+export async function fetchMyApplications(): Promise<ApiApplication[]> {
+  return apiFetch('/api/my-applications');
+}
+
+// ============================================================
 // USERS / MEMBERS
 // ============================================================
 

@@ -12,7 +12,7 @@ import {
   Wrench, Layers, Award, Users, GraduationCap as GrantIcon, Camera, Save, Info, Shield, HelpCircle, Accessibility, Bell, BellRing, Eye, EyeOff, Scale, Image as ImageIcon, Copy, Settings as SettingsIcon, History, Gift, HeartPulse, User, LogOut, Edit3, Check, RefreshCw
 } from 'lucide-react';
 import { getCareerAdvice, summarizeStory, getSmartReplies } from './services/geminiService';
-import { fetchJobs, fetchScholarships, fetchUsers, createScholarship, deleteScholarship, login, signup, logout, updateUser, type ApiJob, type ApiScholarship, type ApiUser } from './services/apiService';
+import { fetchJobs, fetchScholarships, fetchUsers, createScholarship, deleteScholarship, login, signup, logout, updateUser, applyToJob, fetchMyApplications, type ApiJob, type ApiScholarship, type ApiUser, type ApiApplication } from './services/apiService';
 import { AuthPage } from './components/AuthPage';
 
 type InfoSection = 'about' | 'guidelines' | 'privacy' | 'help' | 'accessibility';
@@ -62,6 +62,8 @@ const App: React.FC = () => {
   // Job and Company detail states
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [myApplications, setMyApplications] = useState<ApiApplication[]>([]);
+  const [applyingJobId, setApplyingJobId] = useState<string | null>(null);
 
   // Employer Posting state
   const [showPostJobModal, setShowPostJobModal] = useState(false);
@@ -185,6 +187,32 @@ const App: React.FC = () => {
     };
     loadBackendData();
   }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setMyApplications([]);
+      return;
+    }
+    fetchMyApplications().then(setMyApplications).catch(err => console.error('Failed to load applications:', err));
+  }, [isLoggedIn]);
+
+  const handleApply = async (jobId: string) => {
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
+    setApplyingJobId(jobId);
+    try {
+      await applyToJob(jobId);
+      const apps = await fetchMyApplications();
+      setMyApplications(apps);
+    } catch (err) {
+      console.error('Failed to apply to job:', err);
+    } finally {
+      setApplyingJobId(null);
+    }
+  };
+
   const [stories, setStories] = useState<Story[]>([]);
   const [threads, setThreads] = useState<Thread[]>([]);
   const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
@@ -1372,12 +1400,27 @@ const App: React.FC = () => {
           <div className="absolute inset-0 bg-slate-900/90 backdrop-blur-xl animate-in fade-in duration-700" onClick={() => setSelectedJob(null)}></div>
           <Card className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-[4rem] p-12 sm:p-20 shadow-2xl animate-in zoom-in-95 duration-500 border-none">
             <button onClick={() => setSelectedJob(null)} className="absolute top-10 right-10 bg-slate-100 p-5 rounded-[2rem] text-slate-900 hover:bg-rose-50 hover:text-rose-600 transition-all"><X size={28}/></button>
-            <div className="flex flex-col md:flex-row gap-12 mb-16 items-start">
+            <div className="flex flex-col md:flex-row gap-12 mb-10 items-start">
                <div className="w-32 h-32 rounded-[2.5rem] overflow-hidden border-4 border-slate-50 shadow-xl shrink-0"><img src={selectedJob.logo_url} className="w-full h-full object-cover" /></div>
-               <div className="space-y-4">
+               <div className="space-y-4 flex-grow">
                   <h2 className="text-5xl font-serif font-black text-slate-900 leading-tight">{selectedJob.title}</h2>
                   <div className="flex flex-wrap gap-8 text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 pt-2"><span className="flex items-center gap-2"><Building2 size={18} className="text-indigo-600"/> {selectedJob.company_name}</span><span className="flex items-center gap-2"><MapPin size={18} className="text-indigo-600"/> {selectedJob.city}, {selectedJob.state}</span><span className="flex items-center gap-2"><DollarSign size={18} className="text-emerald-500"/> {selectedJob.salary}</span></div>
                </div>
+            </div>
+            <div className="mb-16">
+              {myApplications.some(a => a.jobId === selectedJob.id) ? (
+                <button disabled className="px-10 py-5 bg-emerald-50 text-emerald-600 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center gap-3 cursor-default">
+                  <CheckCircle2 size={18}/> Already Applied
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleApply(selectedJob.id)}
+                  disabled={applyingJobId === selectedJob.id}
+                  className="px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-slate-900 transition-all shadow-xl active:scale-95 flex items-center gap-3 disabled:opacity-60"
+                >
+                  {applyingJobId === selectedJob.id ? 'Applying...' : 'Apply Now'}
+                </button>
+              )}
             </div>
             <div className="mt-8 prose prose-slate max-w-none">
                <h3 className="text-2xl font-black text-slate-900 uppercase tracking-widest mb-6">Description</h3>
