@@ -176,6 +176,23 @@ export async function fetchUsers(): Promise<ApiUser[]> {
   return apiFetch('/api/users');
 }
 
+export interface UpdateUserPayload {
+  name?: string;
+  headline?: string;
+  school?: string;
+  major?: string;
+  location?: string;
+  avatarUrl?: string;
+  skills?: string[];
+}
+
+export async function updateUser(userId: string, payload: UpdateUserPayload): Promise<{ status: string; user: Record<string, unknown> }> {
+  return apiFetch(`/api/users/${userId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  });
+}
+
 // ============================================================
 // STATUS / HEALTH
 // ============================================================

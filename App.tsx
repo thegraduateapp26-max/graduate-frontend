@@ -12,7 +12,7 @@ import {
   Wrench, Layers, Award, Users, GraduationCap as GrantIcon, Camera, Save, Info, Shield, HelpCircle, Accessibility, Bell, BellRing, Eye, EyeOff, Scale, Image as ImageIcon, Copy, Settings as SettingsIcon, History, Gift, HeartPulse, User, LogOut, Edit3, Check, RefreshCw
 } from 'lucide-react';
 import { getCareerAdvice, summarizeStory, getSmartReplies } from './services/geminiService';
-import { fetchJobs, fetchScholarships, fetchUsers, createScholarship, deleteScholarship, login, signup, logout, type ApiJob, type ApiScholarship, type ApiUser } from './services/apiService';
+import { fetchJobs, fetchScholarships, fetchUsers, createScholarship, deleteScholarship, login, signup, logout, updateUser, type ApiJob, type ApiScholarship, type ApiUser } from './services/apiService';
 import { AuthPage } from './components/AuthPage';
 
 type InfoSection = 'about' | 'guidelines' | 'privacy' | 'help' | 'accessibility';
@@ -466,6 +466,18 @@ const App: React.FC = () => {
       localStorage.setItem('graduate_user', JSON.stringify(toStore));
     } catch {}
     setIsEditingProfile(false);
+
+    if (updated.uid) {
+      updateUser(updated.uid, {
+        name: updated.name,
+        headline: updated.headline,
+        school: updated.school,
+        major: updated.major,
+        location: updated.location,
+        skills: updated.skills,
+        avatarUrl: updated.avatarUrl,
+      }).catch(err => console.error('Failed to save profile to server:', err));
+    }
   };
 
   const renderJobs = () => (
