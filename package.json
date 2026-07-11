@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cp -r landing/. dist/",
     "preview": "vite preview",
-    "start": "serve -s dist -l ${PORT:-3000}"
+    "start": "serve -p ${PORT:-3000} dist"
   },
   "dependencies": {
     "@google/genai": "^1.39.0",

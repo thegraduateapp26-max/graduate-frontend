@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graduate | Your Career &amp; Education Hub</title>
+  <meta name="description" content="Graduate connects students, graduates, employers, and professors — find jobs, scholarships, and endorsements in one place." />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+        </span>
+        Grad<span class="accent">uate</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#features">Features</a>
+        <a href="#jobs">Jobs</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#testimonials">Stories</a>
+      </nav>
+      <div class="header-cta">
+        <a href="/app" class="btn btn-ghost">Sign In</a>
+        <a href="/app" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Welcome to Graduate</span>
+          <h1>Your career starts here, <span class="accent-serif">Graduate</span>.</h1>
+          <p class="hero-sub">Connect with employers, find scholarships, get endorsed by professors, and build the professional network that gets you hired.</p>
+          <div class="hero-actions">
+            <a href="/app" class="btn btn-primary btn-lg">Get Started <span aria-hidden="true">&rarr;</span></a>
+            <a href="#features" class="btn btn-outline btn-lg">See how it works</a>
+          </div>
+        </div>
+        <div class="hero-art" id="capStage" aria-hidden="true">
+          <svg id="cap" viewBox="0 0 200 200" width="100%" height="100%">
+            <defs>
+              <linearGradient id="capTop" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#818cf8"/>
+                <stop offset="100%" stop-color="#4338ca"/>
+              </linearGradient>
+              <linearGradient id="capBoard" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#312e81"/>
+                <stop offset="100%" stop-color="#1e1b4b"/>
+              </linearGradient>
+            </defs>
+            <g id="capGroup">
+              <ellipse cx="100" cy="120" rx="46" ry="20" fill="url(#capTop)"/>
+              <polygon points="100,40 190,90 100,140 10,90" fill="url(#capBoard)"/>
+              <circle cx="100" cy="90" r="7" fill="#facc15"/>
+              <line x1="100" y1="90" x2="150" y2="150" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="150" cy="150" r="6" fill="#facc15"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="wrap stats-grid">
+        <div class="stat">
+          <div class="stat-num" data-stat="members">&mdash;</div>
+          <div class="stat-label">Members</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-stat="jobs">&mdash;</div>
+          <div class="stat-label">Open Jobs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-stat="scholarships">&mdash;</div>
+          <div class="stat-label">Scholarships</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+      <div class="wrap">
+        <span class="eyebrow center">What you get</span>
+        <h2 class="section-title center">Built for everyone in the room</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🎓</div>
+            <h3>For Students</h3>
+            <p>Discover scholarships matched to your major, apply to internships and jobs, and get endorsed by the professors who know your work best.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💼</div>
+            <h3>For Employers</h3>
+            <p>Post roles directly to a pool of verified students and graduates, filter by school and major, and track every application in one dashboard.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏛️</div>
+            <h3>For Professors</h3>
+            <p>Endorse students you've worked with, verify their skills publicly, and help your best students get in front of the right employers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOB PREVIEWS -->
+    <section class="jobs" id="jobs">
+      <div class="wrap">
+        <span class="eyebrow center">Live from the board</span>
+        <h2 class="section-title center">Open roles right now</h2>
+        <div class="job-grid" id="jobGrid">
+          <div class="job-card skeleton"></div>
+          <div class="job-card skeleton"></div>
+          <div class="job-card skeleton"></div>
+        </div>
+        <div class="jobs-cta">
+          <a href="/app" class="btn btn-primary">Browse all jobs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+      <div class="wrap">
+        <span class="eyebrow center">Stories</span>
+        <h2 class="section-title center">People building careers on Graduate</h2>
+        <div class="testimonial-grid">
+          <blockquote class="testimonial">
+            <p>"I found my internship through a professor endorsement I didn't even know I had. Two weeks later I had an offer."</p>
+            <cite>— Maya R., Computer Science student</cite>
+          </blockquote>
+          <blockquote class="testimonial">
+            <p>"We filled two entry-level roles in a week by posting directly to the Graduate network instead of a generic job board."</p>
+            <cite>— Devon K., Talent Lead</cite>
+          </blockquote>
+          <blockquote class="testimonial">
+            <p>"Endorsing students I've mentored takes two minutes and actually helps them get noticed. It should've existed years ago."</p>
+            <cite>— Prof. Alicia Ferreira</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+      <div class="wrap">
+        <span class="eyebrow center">Pricing</span>
+        <h2 class="section-title center">Simple, honest pricing</h2>
+        <div class="pricing-grid">
+          <div class="price-card">
+            <h3>Students &amp; Graduates</h3>
+            <div class="price">Free<span>/forever</span></div>
+            <ul>
+              <li>Full access to jobs &amp; scholarships</li>
+              <li>Professor endorsements</li>
+              <li>Member directory &amp; messaging</li>
+            </ul>
+            <a href="/app" class="btn btn-outline btn-block">Get Started</a>
+          </div>
+          <div class="price-card featured">
+            <span class="price-badge">For hiring teams</span>
+            <h3>Employers</h3>
+            <div class="price">$49<span>/month</span></div>
+            <ul>
+              <li>Unlimited job postings</li>
+              <li>Applicant tracking dashboard</li>
+              <li>Verified student &amp; graduate pool</li>
+            </ul>
+            <a href="/app" class="btn btn-primary btn-block">Start Hiring</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="wrap">
+        <h2>Ready to get started?</h2>
+        <p>Join students, graduates, employers, and professors already on Graduate.</p>
+        <a href="/app" class="btn btn-primary btn-lg">Get Started <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>Graduate — Career &amp; Education Hub</span>
+      <span>© 2026 Graduate. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+</html>
