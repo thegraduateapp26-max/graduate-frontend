@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  GraduationCap, Briefcase, DollarSign, Tag as TagIcon, 
-  Users, Shield, Menu, X, MessageCircle, UserPlus, 
-  Search, Bell, MapPin, Briefcase as WorkIcon, Home, Settings, Eye, EyeOff, LogOut
+import {
+  GraduationCap, Briefcase, DollarSign, Tag as TagIcon,
+  Users, Shield, Menu, X, MessageCircle, UserPlus,
+  Search, Bell, MapPin, Briefcase as WorkIcon, Home, Settings, Eye, EyeOff, LogOut, LogIn
 } from 'lucide-react';
 import { Role, UserProfile } from '../types';
 
@@ -158,9 +158,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
             <Bell size={20} />
             <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
           </button>
-          <div 
-            className="w-10 h-10 rounded-xl overflow-hidden border-2 border-slate-100 shadow-sm cursor-pointer hover:border-indigo-600 transition-colors relative" 
-            onClick={() => setView('profile')}
+          <div
+            className="w-10 h-10 rounded-xl overflow-hidden border-2 border-slate-100 shadow-sm cursor-pointer hover:border-indigo-600 transition-colors relative"
+            onClick={() => isLoggedIn ? setView('profile') : onLoginClick?.()}
           >
              <img src={user.avatarUrl || "https://ui-avatars.com/api/?name=User&background=6366f1&color=fff"} className="w-full h-full object-cover" alt="User" />
              <div className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white ${user.activeStatus === 'online' ? 'bg-emerald-500' : 'bg-slate-400'}`}></div>
@@ -173,62 +173,80 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
 
       <div className="flex-grow flex flex-col lg:flex-row w-full px-8">
         <aside className="w-full lg:w-72 pt-8 lg:pt-10 shrink-0">
-          <Card className="p-6 sticky top-36">
-            <div className="flex items-center gap-4 mb-6">
-              <div 
-                className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-50 shadow-sm cursor-pointer hover:scale-105 transition-transform relative"
-                onClick={() => setView('profile')}
-              >
-                 <img src={user.avatarUrl || "https://ui-avatars.com/api/?name=User&background=6366f1&color=fff"} className="w-full h-full object-cover" alt="Avatar" />
-                 <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white ${user.activeStatus === 'online' ? 'bg-emerald-500' : 'bg-slate-400'}`}></div>
+          {isLoggedIn ? (
+            <Card className="p-6 sticky top-36">
+              <div className="flex items-center gap-4 mb-6">
+                <div
+                  className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-slate-50 shadow-sm cursor-pointer hover:scale-105 transition-transform relative"
+                  onClick={() => setView('profile')}
+                >
+                   <img src={user.avatarUrl || "https://ui-avatars.com/api/?name=User&background=6366f1&color=fff"} className="w-full h-full object-cover" alt="Avatar" />
+                   <div className={`absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white ${user.activeStatus === 'online' ? 'bg-emerald-500' : 'bg-slate-400'}`}></div>
+                </div>
+                <div className="min-w-0">
+                  <h4 className="font-black text-slate-900 leading-tight truncate">{user.name}</h4>
+                  <div className="flex items-center gap-1.5 mt-1">
+                     <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                      {user.role === Role.ADMIN ? 'System Admin' : 'Verified'}
+                    </p>
+                    <button
+                      onClick={onToggleStatus}
+                      className="p-1 hover:bg-slate-100 rounded-md transition-colors"
+                      title={user.activeStatus === 'online' ? "Switch to Offline" : "Switch to Online"}
+                    >
+                      {user.activeStatus === 'online' ? <Eye size={10} className="text-emerald-500" /> : <EyeOff size={10} className="text-slate-400" />}
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="min-w-0">
-                <h4 className="font-black text-slate-900 leading-tight truncate">{user.name}</h4>
-                <div className="flex items-center gap-1.5 mt-1">
-                   <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600">
-                    {user.role === Role.ADMIN ? 'System Admin' : 'Verified'}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <div className="bg-slate-50 p-1.5 rounded-lg text-slate-400 shrink-0">
+                    <WorkIcon size={14} />
+                  </div>
+                  <p className="text-xs font-semibold text-slate-600 leading-relaxed line-clamp-2">
+                    {user.headline || user.role}
                   </p>
-                  <button 
-                    onClick={onToggleStatus}
-                    className="p-1 hover:bg-slate-100 rounded-md transition-colors"
-                    title={user.activeStatus === 'online' ? "Switch to Offline" : "Switch to Online"}
-                  >
-                    {user.activeStatus === 'online' ? <Eye size={10} className="text-emerald-500" /> : <EyeOff size={10} className="text-slate-400" />}
-                  </button>
+                </div>
+                <div className="flex items-center gap-3 text-slate-400">
+                  <div className="bg-slate-50 p-1.5 rounded-lg shrink-0">
+                    <MapPin size={14} />
+                  </div>
+                  <span className="text-xs font-bold text-slate-500">{user.location || "Remote / Global"}</span>
                 </div>
               </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="bg-slate-50 p-1.5 rounded-lg text-slate-400 shrink-0">
-                  <WorkIcon size={14} />
-                </div>
-                <p className="text-xs font-semibold text-slate-600 leading-relaxed line-clamp-2">
-                  {user.headline || user.role}
-                </p>
-              </div>
-              <div className="flex items-center gap-3 text-slate-400">
-                <div className="bg-slate-50 p-1.5 rounded-lg shrink-0">
-                  <MapPin size={14} />
-                </div>
-                <span className="text-xs font-bold text-slate-500">{user.location || "Remote / Global"}</span>
-              </div>
-            </div>
-            <button 
-              onClick={() => setView('profile')}
-              className="w-full mt-6 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-indigo-600 transition-all shadow-lg active:scale-95"
-            >
-              My Profile
-            </button>
-            {onLogout && (
-              <button 
-                onClick={onLogout}
-                className="w-full mt-3 py-3 bg-white border-2 border-slate-100 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:text-rose-600 hover:border-rose-100 transition-all flex items-center justify-center gap-2"
+              <button
+                onClick={() => setView('profile')}
+                className="w-full mt-6 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-indigo-600 transition-all shadow-lg active:scale-95"
               >
-                <LogOut size={14} /> Log Out
+                My Profile
               </button>
-            )}
-          </Card>
+              {onLogout && (
+                <button
+                  onClick={onLogout}
+                  className="w-full mt-3 py-3 bg-white border-2 border-slate-100 text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-xl hover:text-rose-600 hover:border-rose-100 transition-all flex items-center justify-center gap-2"
+                >
+                  <LogOut size={14} /> Log Out
+                </button>
+              )}
+            </Card>
+          ) : (
+            <Card className="p-6 sticky top-36">
+              <div className="bg-indigo-600 p-3 rounded-2xl w-fit mb-4">
+                <GraduationCap className="text-white w-6 h-6" />
+              </div>
+              <h4 className="font-black text-slate-900 leading-tight mb-1">Join Graduate</h4>
+              <p className="text-xs font-semibold text-slate-500 leading-relaxed mb-6">
+                Sign in to view your profile, apply to jobs, and connect with your network.
+              </p>
+              <button
+                onClick={onLoginClick}
+                className="w-full py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-indigo-600 transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2"
+              >
+                <LogIn size={14} /> Sign In
+              </button>
+            </Card>
+          )}
         </aside>
 
         <main className="flex-grow pt-8 lg:pt-10 pb-24 md:pb-12 min-w-0 lg:pl-10">
@@ -265,11 +283,14 @@ export const Layout: React.FC<LayoutProps> = ({ children, currentView, setView, 
                 </button>
               ))}
               <button
-                  onClick={() => { setView('profile'); setIsMobileMenuOpen(false); }}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    isLoggedIn ? setView('profile') : onLoginClick?.();
+                  }}
                   className={`flex items-center gap-6 px-8 py-6 rounded-3xl text-2xl font-serif font-black transition-all bg-white/5 text-slate-400 hover:text-white hover:bg-white/10`}
                 >
-                  <Users size={32} />
-                  Profile
+                  {isLoggedIn ? <Users size={32} /> : <LogIn size={32} />}
+                  {isLoggedIn ? 'Profile' : 'Sign In'}
                 </button>
            </div>
         </div>

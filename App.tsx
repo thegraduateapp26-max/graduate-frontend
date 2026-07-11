@@ -1119,7 +1119,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout currentView={view} setView={setView} userRole={user.role} user={user} isLoggedIn={isLoggedIn} onToggleStatus={handleToggleStatus} onLogout={handleLogout} onLoginClick={() => setShowAuthModal(true)} onNotificationsClick={() => setIsNotificationsOpen(!isNotificationsOpen)} searchData={{ jobs, members, scholarships }} onSearchSelect={(type, id) => { if (type === 'job') { const job = jobs.find(j => j.id === id); if (job) { setSelectedJob(job); } } else if (type === 'member') { setViewedProfileId(id); setView('profile'); } else if (type === 'scholarship') { setView('scholarships'); } }}>
+    <Layout currentView={view} setView={setView} userRole={isLoggedIn ? user.role : Role.VISITOR} user={user} isLoggedIn={isLoggedIn} onToggleStatus={handleToggleStatus} onLogout={handleLogout} onLoginClick={() => setShowAuthModal(true)} onNotificationsClick={() => setIsNotificationsOpen(!isNotificationsOpen)} searchData={{ jobs, members, scholarships }} onSearchSelect={(type, id) => { if (type === 'job') { const job = jobs.find(j => j.id === id); if (job) { setSelectedJob(job); } } else if (type === 'member') { setViewedProfileId(id); setView('profile'); } else if (type === 'scholarship') { setView('scholarships'); } }}>
       {renderContent()}
 
       {showAuthModal && (
