@@ -3,7 +3,7 @@
 // Connects the frontend to your Cloud Run backend
 // ============================================================
 
-const API_BASE_URL = 'https://web-app-374908451962.us-central1.run.app';
+const API_BASE_URL = 'https://graduate-backend-production.up.railway.app';
 
 // ---- Auth Token Helpers ----
 
