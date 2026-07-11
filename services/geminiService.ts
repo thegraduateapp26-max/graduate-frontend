@@ -1,12 +1,19 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Initialize GoogleGenAI using strictly process.env.API_KEY as per guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazily constructed so a missing API key fails inside the try/catch below
+// instead of throwing at module load and crashing the whole app.
+let ai: GoogleGenAI | null = null;
+function getClient(): GoogleGenAI {
+  if (!ai) {
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  }
+  return ai;
+}
 
 export const getCareerAdvice = async (role: string, query: string) => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getClient().models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `User is a ${role}. Question: ${query}. Provide professional career advice in a friendly, encouraging tone. Keep it under 150 words.`,
       config: {
@@ -24,7 +31,7 @@ export const getCareerAdvice = async (role: string, query: string) => {
 
 export const summarizeStory = async (content: string) => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getClient().models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Summarize this success story in one impactful sentence: ${content}`,
     });
@@ -37,7 +44,7 @@ export const summarizeStory = async (content: string) => {
 
 export const getSmartReplies = async (lastMessage: string) => {
   try {
-    const response = await ai.models.generateContent({
+    const response = await getClient().models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Based on this message received from a networking contact: "${lastMessage}", provide 3 short, professional "Smart Reply" suggestions (max 10 words each). Return as a JSON array of strings.`,
       config: {

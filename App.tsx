@@ -23,7 +23,7 @@ const POPULAR_KEYWORDS = [
 ];
 
 const App: React.FC = () => {
-  const [view, setView] = useState('home'); 
+  const [view, setView] = useState(() => new URLSearchParams(window.location.search).get('view') || 'home'); 
   const [viewedProfileId, setViewedProfileId] = useState<string | null>(null);
   const [activeProfileTab, setActiveProfileTab] = useState<'portfolio' | 'projects' | 'endorsements' | 'skills' | 'alerts' | 'settings'>('portfolio');
   const [activeInfoSection, setActiveInfoSection] = useState<InfoSection | null>(null);
