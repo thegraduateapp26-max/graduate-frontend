@@ -192,6 +192,24 @@ p { line-height: 1.6; }
   #cap { width: 220px; height: 220px; }
 }
 
+/* Pitch / Illustration */
+.pitch { padding: 96px 0; background: white; }
+.pitch-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 48px;
+}
+.pitch-copy h2 { font-size: 34px; line-height: 1.25; margin: 0 0 20px; }
+.pitch-copy p { font-size: 16px; color: var(--slate-600); max-width: 460px; }
+.pitch-art { display: flex; align-items: center; justify-content: center; }
+.pitch-art svg { max-width: 380px; }
+
+@media (max-width: 860px) {
+  .pitch-inner { grid-template-columns: 1fr; }
+  .pitch-art { order: -1; }
+}
+
 /* Stats */
 .stats { background: white; border-bottom: 1px solid var(--slate-100); }
 .stats-grid {
@@ -230,7 +248,7 @@ p { line-height: 1.6; }
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .feature-card:hover { box-shadow: 0 24px 48px rgba(79,70,229,0.08); transform: translateY(-4px); }
-.feature-icon { font-size: 36px; margin-bottom: 20px; }
+.feature-icon { margin-bottom: 20px; }
 .feature-card h3 { font-size: 22px; margin-bottom: 12px; }
 .feature-card p { color: var(--slate-600); font-size: 15px; }
 
