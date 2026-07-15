@@ -7,9 +7,7 @@
   <meta name="description" content="Graduate connects students, graduates, employers, and professors — find jobs, scholarships, and endorsements in one place." />
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
-  <script type="importmap">
-    { "imports": { "three": "https://unpkg.com/three@0.169.0/build/three.module.js" } }
-  </script>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js"></script>
 </head>
 <body>
 
@@ -47,8 +45,8 @@
             <a href="#features" class="btn btn-outline btn-lg">See how it works</a>
           </div>
         </div>
-        <div class="hero-art" id="capStage" aria-hidden="true">
-          <canvas id="capCanvas"></canvas>
+        <div class="hero-art" aria-hidden="true">
+          <spline-viewer url="https://prod.spline.design/NSQRaZ3MFAG-GvU6/scene.splinecode"></spline-viewer>
         </div>
       </div>
     </section>
@@ -62,34 +60,7 @@
           <p>No cold-applying into the void. Graduate connects who you are — your school, your major, your projects — to the people who are actually hiring and endorsing.</p>
         </div>
         <div class="pitch-art">
-          <svg viewBox="0 0 420 340" width="100%" height="100%">
-            <ellipse cx="210" cy="300" rx="170" ry="24" fill="#e0e7ff"/>
-            <rect x="30" y="40" width="120" height="220" rx="10" fill="#eef2ff"/>
-            <rect x="46" y="56" width="88" height="10" rx="3" fill="#c7d2fe"/>
-            <rect x="46" y="74" width="60" height="10" rx="3" fill="#c7d2fe"/>
-            <rect x="46" y="100" width="88" height="34" rx="4" fill="#4f46e5"/>
-            <rect x="46" y="144" width="40" height="40" rx="20" fill="#facc15"/>
-            <rect x="94" y="144" width="40" height="40" rx="6" fill="#312e81"/>
-            <rect x="46" y="194" width="88" height="10" rx="3" fill="#c7d2fe"/>
-            <rect x="46" y="212" width="70" height="10" rx="3" fill="#c7d2fe"/>
-            <rect x="46" y="230" width="88" height="18" rx="4" fill="#a5b4fc"/>
-
-            <rect x="150" y="230" width="130" height="18" rx="9" fill="#c7d2fe"/>
-
-            <g>
-              <path d="M240 250 Q260 150 320 140 Q380 150 360 250 Z" fill="#4338ca"/>
-              <circle cx="300" cy="120" r="30" fill="#fbbf9e"/>
-              <path d="M272 112c4-18 52-18 56 0" fill="none" stroke="#1e1b4b" stroke-width="6" stroke-linecap="round"/>
-              <rect x="255" y="205" width="90" height="55" rx="14" fill="#1e293b"/>
-              <rect x="265" y="180" width="70" height="45" rx="6" fill="#f8fafc"/>
-              <rect x="272" y="188" width="56" height="6" rx="2" fill="#4f46e5"/>
-              <rect x="272" y="198" width="40" height="6" rx="2" fill="#a5b4fc"/>
-            </g>
-
-            <circle cx="360" cy="70" r="14" fill="#facc15"/>
-            <circle cx="380" cy="100" r="7" fill="#818cf8"/>
-            <circle cx="40" cy="90" r="9" fill="#facc15"/>
-          </svg>
+          <spline-viewer url="https://prod.spline.design/7w9qdgegEMNdjUcK/scene.splinecode"></spline-viewer>
         </div>
       </div>
     </section>
@@ -252,6 +223,5 @@
   </footer>
 
   <script src="/script.js"></script>
-  <script type="module" src="/cap3d.js"></script>
 </body>
 </html>
