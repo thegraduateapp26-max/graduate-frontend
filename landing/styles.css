@@ -185,23 +185,11 @@ p { line-height: 1.6; }
   .hero-art { height: 240px; order: -1; }
 }
 
-/* Pitch / Illustration */
+/* Pitch */
 .pitch { padding: 96px 0; background: white; }
-.pitch-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 48px;
-}
+.pitch-inner { max-width: 640px; margin: 0 auto; text-align: center; }
 .pitch-copy h2 { font-size: 34px; line-height: 1.25; margin: 0 0 20px; }
-.pitch-copy p { font-size: 16px; color: var(--slate-600); max-width: 460px; }
-.pitch-art { display: flex; align-items: center; justify-content: center; height: 380px; }
-.pitch-art img { width: 100%; max-width: 420px; height: auto; }
-
-@media (max-width: 860px) {
-  .pitch-inner { grid-template-columns: 1fr; }
-  .pitch-art { order: -1; }
-}
+.pitch-copy p { font-size: 16px; color: var(--slate-600); max-width: 460px; margin: 0 auto; }
 
 /* Stats */
 .stats { background: white; border-bottom: 1px solid var(--slate-100); }
@@ -278,6 +266,8 @@ p { line-height: 1.6; }
 
 /* Testimonials */
 .testimonials { padding: 96px 0; background: white; }
+.stories-art { display: flex; align-items: center; justify-content: center; margin: 0 auto 56px; height: 320px; }
+.stories-art img { width: 100%; max-width: 360px; height: auto; }
 .testimonial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
