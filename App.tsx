@@ -333,6 +333,39 @@ const App: React.FC = () => {
 
   const handleToggleStatus = () => setUser(prev => ({ ...prev, activeStatus: prev.activeStatus === 'online' ? 'offline' : 'online' }));
 
+  const handleAuthSuccess = (userId: string, token: string, name?: string, role?: string) => {
+    const freshUser = {
+      uid: userId,
+      name: name || '',
+      email: '',
+      headline: role ? role.charAt(0).toUpperCase() + role.slice(1) : '',
+      avatarUrl: '',
+      role: role === 'admin' ? Role.ADMIN :
+        role === 'employer' ? Role.EMPLOYER :
+        role === 'student' ? Role.STUDENT :
+        role === 'professor' ? Role.PROFESSOR :
+        role === 'recruiter' ? Role.RECRUITER :
+        Role.GRADUATE,
+      isVerified: false,
+      status: VerificationStatus.PENDING,
+      activeStatus: 'online' as const,
+      major: '',
+      school: '',
+      skills: [],
+      savedItems: [],
+      location: '',
+      backgroundUrl: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=400&fit=crop',
+      portfolioLinks: [],
+      projects: [],
+      endorsements: [],
+    };
+    setIsLoggedIn(true);
+    setShowAuthModal(false);
+    setUser(freshUser);
+    setView('home');
+    try { localStorage.setItem('graduate_user', JSON.stringify(freshUser)); } catch {}
+  };
+
   const handleLogout = () => {
     logout();
     localStorage.clear();
@@ -1181,6 +1214,10 @@ const App: React.FC = () => {
     }
   };
 
+  if (!isLoggedIn && (view === 'signin' || view === 'join')) {
+    return <AuthPage initialMode={view === 'join' ? 'signup' : 'login'} onAuthSuccess={handleAuthSuccess} />;
+  }
+
   return (
     <Layout currentView={view} setView={setView} userRole={isLoggedIn ? user.role : Role.VISITOR} user={user} isLoggedIn={isLoggedIn} onToggleStatus={handleToggleStatus} onLogout={handleLogout} onLoginClick={() => setShowAuthModal(true)} onNotificationsClick={() => setIsNotificationsOpen(!isNotificationsOpen)} searchData={{ jobs, members, scholarships }} onSearchSelect={(type, id) => { if (type === 'job') { const job = jobs.find(j => j.id === id); if (job) { setSelectedJob(job); } } else if (type === 'member') { setViewedProfileId(id); setView('profile'); } else if (type === 'scholarship') { setView('scholarships'); } }}>
       {renderContent()}
@@ -1189,37 +1226,7 @@ const App: React.FC = () => {
         <div className="fixed inset-0 z-[900] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xl" onClick={() => setShowAuthModal(false)}></div>
           <div className="relative z-10 w-full max-w-md">
-            <AuthPage onAuthSuccess={(userId, token, name, role) => {
-              const freshUser = {
-                uid: userId,
-                name: name || '',
-                email: '',
-                headline: role ? role.charAt(0).toUpperCase() + role.slice(1) : '',
-                avatarUrl: '',
-                role: role === 'admin' ? Role.ADMIN : 
-                role === 'employer' ? Role.EMPLOYER :
-                role === 'student' ? Role.STUDENT :
-                role === 'professor' ? Role.PROFESSOR :
-                role === 'recruiter' ? Role.RECRUITER :
-                Role.GRADUATE,
-                isVerified: false,
-                status: VerificationStatus.PENDING,
-                activeStatus: 'online' as const,
-                major: '',
-                school: '',
-                skills: [],
-                savedItems: [],
-                location: '',
-                backgroundUrl: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=400&fit=crop',
-                portfolioLinks: [],
-                projects: [],
-                endorsements: [],
-              };
-              setIsLoggedIn(true);
-              setShowAuthModal(false);
-              setUser(freshUser);
-              try { localStorage.setItem('graduate_user', JSON.stringify(freshUser)); } catch {}
-            }} />
+            <AuthPage onAuthSuccess={handleAuthSuccess} />
           </div>
         </div>
       )}

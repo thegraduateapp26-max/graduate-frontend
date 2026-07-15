@@ -4,10 +4,11 @@ import { login, signup } from '../services/apiService';
 
 interface AuthPageProps {
   onAuthSuccess: (userId: string, token: string, name?: string, role?: string) => void;
+  initialMode?: 'login' | 'signup';
 }
 
-export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess, initialMode = 'login' }) => {
+  const [mode, setMode] = useState<'login' | 'signup'>(initialMode);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
