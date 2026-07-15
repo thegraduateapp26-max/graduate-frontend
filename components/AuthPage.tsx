@@ -72,7 +72,19 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess, initialMode =
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+    <div className="w-full max-w-4xl flex flex-col md:flex-row items-center gap-12">
+
+      {/* Illustration */}
+      <div className="hidden md:flex flex-1 items-center justify-center">
+        <img
+          src="/images/why-graduate.png"
+          alt="A student studying on her laptop with her Graduate University diploma framed on the wall behind her"
+          className="w-full max-w-sm"
+        />
+      </div>
+
+      <div className="w-full max-w-md flex flex-col items-center">
 
       {/* Logo */}
       <div className="flex items-center gap-3 mb-12">
@@ -85,7 +97,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess, initialMode =
       </div>
 
       {/* Card */}
-      <div className="w-full max-w-md bg-white rounded-[3rem] shadow-2xl shadow-slate-200 p-10 border border-slate-100">
+      <div className="w-full bg-white rounded-[3rem] shadow-2xl shadow-slate-200 p-10 border border-slate-100">
 
         {/* Header */}
         <div className="mb-10 text-center">
@@ -246,6 +258,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess, initialMode =
       <p className="mt-8 text-[10px] text-slate-400 font-black uppercase tracking-widest">
         Graduate — Career & Education Hub
       </p>
+      </div>
+    </div>
     </div>
   );
 };
